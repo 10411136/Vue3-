@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ES Module</title>
+    </head>
+    <body>
+        <!-- 告訴瀏覽器script區塊中是使用ES Module的使用方式 -->
+        <script type="module">  
+            import add, {minus, name, age} from "./javascript/js1.js";  
+            // 要取用js1.js中的name和age藥用解構的方式使用大括號來import進來
+
+            console.log(add(2, 3));
+            console.log(minus(2, 3));
+            console.log(name, age);
+        </script>
+    </body>
+
+ 
+</html>
