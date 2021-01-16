@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>createApp & setup</title>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 可以給Vue去做操作 -->
+            
+        </div>
+        <script src="./js/vue.js"></script>
+
+        <script>
+
+            // vue的起手式
+            const App = {
+
+                setup(){  
+                    return {}; //將data return給html
+                },
+            };
+            Vue.createApp(App).mount('#app');  // 把這個Vue的app去mount到#app，
+
+        </script>
+
+
+
+    </body>
+
+ 
+</html>
