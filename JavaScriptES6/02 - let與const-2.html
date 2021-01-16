@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>let 與 const</title>
+    </head>
+    <body>
+
+        <script>
+            // 在javascript es6 中，除了物件object和陣列array，其他型別的變數內容是不可以改變的
+
+
+            const a = {name: "mike"}; // 物件a宣告為const，但是可以針對物件新增成員
+            a["age"] = 12;
+
+            console.log(a); // 印出兩個成員name和age
+
+
+            const b = [];
+            b.push('mike');
+            console.log(b);
+
+            // b = 'mike';  
+            // 如果取消上一行註解則會出錯，不能改變b的本質，b的本質是陣列不能改變成字串!
+
+            // 若物件和陣列宣告成const，則可以加元素成員進去，但是本質是不能改變的
+            
+        </script>
+    </body>
+
+
+</html>

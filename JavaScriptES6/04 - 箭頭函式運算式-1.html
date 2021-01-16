@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>箭頭函式運算式(arrow function expression)</title>
+    </head>
+    <body>
+        <a id="aLink1" href="javascript:;">Click1</a>
+        <a id="aLink2" href="javascript:;">Click2</a>
+        <script>
+            document.getElementById("aLink1").addEventListener("click", function (){
+                console.log("alink1");
+                console.log(this); // 這個function會指向到document.getElementById("aLink1")的tag標籤
+            })
+
+            document.getElementById("aLink2").addEventListener("click", (e) => {  // 箭頭 " => " 可以取代function關鍵字
+                console.log("alink2");
+                console.log(this); // 箭頭函式則不會指到document.getElementById("aLink2")的tag標籤
+                console.log(e.target); // 如要取用到this (即document.getElementById("aLink2")的tag標籤)，則必須透過返回值e
+            })
+        </script>
+    </body>
+
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>解構賦值 (Destructuring assignment)</title>
+    </head>
+    <body>
+
+        <script>
+            const data = {
+                name: "mike",
+                age: 12,
+                address: "Taiwan"
+            };
+            // 原本要取出data物件裡的成員，要用下方的方法
+            console.log(data.name, data.age, data.address);
+
+            const data1 = {
+                name: "Howard",
+                age: 18,
+                address: "Korea"
+            };
+            const {name, age, address} = data1;  // 從物件data1分別將成員的內容取出來，在依序賦值給name, age, address
+            console.log(name, age, address);
+            
+            // 如何在物件裡面再包一個物件
+            const userData = {
+                data,
+                data1,
+                time: "20210116"
+            };
+            console.log(userData);
+        </script>
+    </body>
+
+
+</html>

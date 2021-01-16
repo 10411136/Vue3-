@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>let 與 const</title>
+    </head>
+    <body>
+
+        <script>
+            if(true){
+                var a = "123";  //在if區塊用var宣告變數，在if區塊外可以取得這一個變數
+            }
+            console.log(' a = ', a); // 可以取得上方在if區塊中宣告的變數
+
+
+            var arr = [1, 2, 3];
+            if(true){
+                var arr = [];   // 這邊宣告的arr變數會覆蓋掉上方在if區塊外宣告的內容
+            }
+            console.log(' arr = ', arr);
+
+            // 要解決上述，可能會因為重複宣告而不小心將外部宣告的變數內容改掉
+
+            var arr1 = [1, 2, 3];  // 外部宣告arr1陣列變數，裡面有三個元素
+            if(true){
+                let arr1 = []; // if區塊內用let來宣告，僅限於if區塊內可以存取這一個用let宣告的變數
+            }
+            console.log(' arr1 = ', arr1); // 無法取得if區塊內的arr1陣列變數(if區塊內的鎮列為空陣列)，因此這邊會印出if區塊外的arr1陣列變數(有三個元素)
+
+
+            if(true) {
+                const text = 'abc';
+                //  text = 'def';  
+                // 若把上一行取消註解，則會發生錯誤: Uncaught TypeError: Assignment to constant variable
+                // 因為text為const變數，變數(text)的內容是不能被改變的
+                console.log(text);
+            }
+            
+
+            
+        </script>
+    </body>
+
+
+</html>

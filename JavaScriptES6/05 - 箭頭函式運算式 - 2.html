@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>箭頭函式運算式(arrow function expression)</title>
+    </head>
+    <body>
+        <script>
+            const Add2 = function () { // 原本function寫法
+                console.log("Add2");
+            };
+            Add2();
+
+            const Add = () => { // 箭頭函式
+                console.log("Add");
+            };
+            Add();
+
+            function Add3(){  // 如果不是用一個變數來宣告函式的話，無法改寫成箭頭函式
+                console.log("Add3");
+            }
+            Add3();
+
+            const Add4 = (a, b) => { // 原本的箭頭函式寫法
+                return a + b;
+            }
+            console.log(Add4(3, 5));
+
+            const Add5 = (a, b) => a + b;  // 但是Add5的函示中，是直接return a+b的值，所以可以改寫得更簡潔
+            console.log(Add5(3, 5));
+
+
+        </script>
+    </body>
+
+
+</html>
