@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>readonly</title>
+    <style>
+      button {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{Num.idx}}</h1>
+      <button @click="AddFn">Add</button>
+      <button @click="Test">Add copy</button>
+      <br />
+      <br />
+      <br />
+      <br />
+      <h1>{{Num1}}</h1>
+      <button @click="AddFn1">Add</button>
+      <button @click="Test1">Add copy</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, reactive, readonly } = Vue;
+      const App = {
+        setup() {
+          const Num = reactive({ idx: 0 });
+          const copyNum = readonly(Num);
+
+          const Num1 = ref(0);
+          const copyNum1 = readonly(Num1);
+
+          const AddFn = () => {
+            Num.idx++;
+
+            console.log("Num=>", Num);
+            console.log("copyNum=>", copyNum);
+          };
+
+          const Test = () => {
+            copyNum.idx++; // readonly物件的屬性的值是不能被修改的
+          };
+
+          const AddFn1 = () => {
+            Num1.value++;
+
+            console.log("Num=>", Num1);
+            console.log("copyNum=>", copyNum1);
+          };
+
+          const Test1 = () => {
+            copyNum1.value++; // readonly物件的屬性的值是不能被修改的
+          };
+
+          return { Num, AddFn, Test,  Num1, AddFn1, Test1 };
+        },
+      };
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

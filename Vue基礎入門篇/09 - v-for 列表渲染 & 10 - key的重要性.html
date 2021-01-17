@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>v-for & key</title>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <!-- v-for可以將某物件中的每個item都顯示出來
+        v-show可以去覺得要不要顯示 (vue會透過設定css為display: none;的方式去決定要不要顯示出來) -->
+        <!-- 為了讓li每一條清單有它的唯一個key值，讓Vue得知是哪一個清單的內容有改變，則會透過這個唯一的key值去做溝通。 -->
+        <li v-for="(item, idx) in listArr" v-bind:key="item.name" v-show="item.show">{{idx+1}}, {{item.name}}</li>
+        <!-- Key的重點注意事項
+        使用v-for的時候一定要給key
+        使用v-for的時候不要拿索引當作key
+        請使用唯一的值當作key的值 -->
+        <br />
+        <br />
+        <br />
+        <br />
+        <li v-for="(item, idx) in Arr" v-bind:key="item">{{idx+1}}, {{item}}</li>
+
+      </ul>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const { reactive } = Vue;
+      const App = {
+        setup() {
+          const listArr = reactive([
+            { name: "2020 Vue3 專業職人 | 入門篇", show: true },
+            { name: "2020 Vue3 專業職人 | 加值篇", show: false },
+            { name: "2020 Vue3 專業職人 | 進階篇", show: true },
+            { name: "現代 JavaScript 職人之路｜入門篇", show: true },
+            { name: "現代 JavaScript 職人之路｜中階實戰篇", show: false },
+          ]);
+
+          const Arr = reactive(["2020 Vue3 專業職人 | 入門篇", 
+            "2020 Vue3 專業職人 | 加值篇",
+            "2020 Vue3 專業職人 | 進階篇",
+            "現代 JavaScript 職人之路｜入門篇",
+            "現代 JavaScript 職人之路｜中階實戰篇"
+          ]);
+
+
+          return {
+            listArr, Arr
+          };
+        },
+      };
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

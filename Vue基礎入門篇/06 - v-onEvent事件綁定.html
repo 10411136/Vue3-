@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>資料雙向綁定</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>{{num}}</h1>
+            <h2>{{DataNum.num}}</h2>
+
+            <!-- on click event -->
+            <button v-on:click="AddFn">Add</button>
+            <!-- @ 是 v-on: 的縮寫 -->
+            <button @click="RemoveFn">Remove</button>
+        </div>
+        <script src="./js/vue.js"></script> 
+
+        <script>
+
+            const { ref, reactive } = Vue;  
+            const App = {
+
+                setup(){  
+                    const num = ref(0); // ref(0) 會回傳一個物件給num，num這個物件裡面有一個value屬性
+                    console.log(num); // ref(0) 會回傳一個物件給num
+                    const DataNum = reactive({ num: 0});
+                    const AddFn = () => {
+                        // num.value = num.value + 1;
+                        num.value++; // num這個物件要透過value屬性去修改資料
+                        DataNum.num++; // DataNum是一個物件
+                    };  // 在setup裡面要把這個function交給html去做使用就要透過return的方式
+
+                    const RemoveFn = () => {
+                        num.value--;
+                        DataNum.num--;
+                    };
+
+
+                    return { num, AddFn, RemoveFn, DataNum };  // 將AddFn交給html做使用
+                },
+            };
+            Vue.createApp(App).mount('#app');
+
+        </script>
+
+
+
+    </body>
+
+ 
+</html>

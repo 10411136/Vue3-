@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>選擇ref? 還是reactive?</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>{{text}} {{message.text}}</h1>
+        </div>
+        <script src="./js/vue.js"></script> 
+
+        <script>
+
+            const { ref, reactive } = Vue;  
+            const App = {
+
+                setup(){  
+                    const text = ref( "Hello Vue!" );  // 可以接受任何型態的資料，但是不會對物件或陣列內部的屬性變動做監聽
+                    const message = reactive({ text: "Mike" });  // 只能接受物件或陣列，可以做深層的監聽，以及訪問資料不需要用.value
+
+                    return {text, message};
+                },
+            };
+            Vue.createApp(App).mount('#app');
+
+        </script>
+
+
+
+    </body>
+
+ 
+</html>

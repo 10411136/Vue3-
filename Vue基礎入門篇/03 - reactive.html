@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>reactive</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>{{message.name}}</h1>
+        </div>
+        <script src="./js/vue.js"></script> 
+
+        <script>
+
+            const { reactive } = Vue;  // 將ref方法從Vue解構出來
+            // 02 - ref.html的範例則是沒有用解構
+            const App = {
+
+                setup(){  
+                    const message = reactive( {name: "Mike" } );  // reactive 裡面只能放物件或陣列
+
+                    return {message};
+                },
+            };
+            Vue.createApp(App).mount('#app');
+
+        </script>
+
+
+
+    </body>
+
+ 
+</html>
