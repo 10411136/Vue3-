@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ref</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>{{text}}</h1>
+            <h1>{{age}}</h1>
+        </div>
+        <script src="./js/vue.js"></script> 
+
+        <script>
+
+            const { ref } = Vue;  // 將ref方法從Vue解構出來
+            // 02 - ref.html的範例則是沒有用解構
+            const App = {
+
+                setup(){  
+                    let text = "Hello Vue!";  
+                    const age = ref("Hello Vue!"); // 可以把這個資料給Vue去做綁定
+
+                    setTimeout(()=>{  
+                        text = "Mike";  
+                        console.log(text);
+
+                        console.log(age);                         
+                        age.value = "我今年18歲";
+                    }, 1000);
+
+                    return { text, age };
+                },
+            };
+            Vue.createApp(App).mount('#app');
+
+        </script>
+
+
+
+    </body>
+
+ 
+</html>

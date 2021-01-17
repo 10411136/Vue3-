@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ref</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>{{text}}</h1>
+            <h1>{{age}}</h1>
+        </div>
+        <script src="./js/vue.js"></script> 
+
+        <script>
+
+            
+            const App = {
+                setup(){  
+                    let text = "Hello Vue!";  // 不具備讓vue做綁定的功能
+                    const age = Vue.ref("Hello Vue!"); // 可以把這個資料給Vue去做綁定
+
+                    setTimeout(()=>{  // 經過1秒資之後，座以下的事情
+                        text = "Mike";  // 在這裡去改變text變數的內容，但不會去改變html畫面上的呈現內容
+                        console.log(text);
+
+                        console.log(age); // 透過Vue裡面的ref的方法去包裝資料的，在這邊會回傳一個已經被Vue包裝好的物件，回傳的這個物件裡面包含一個value的屬性
+                        age.value = "我今年18歲";
+                    }, 1000);  // 1000毫秒 = 1秒
+
+                    return { text, age };
+                },
+            };
+            Vue.createApp(App).mount('#app');  // 把這個Vue的app去mount到#app，
+
+        </script>
+
+
+
+    </body>
+
+ 
+</html>
