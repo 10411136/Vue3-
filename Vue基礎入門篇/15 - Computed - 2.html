@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Computed</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: slategray;
+      }
+      #app {
+        width: 400px;
+        overflow: hidden;
+        border: 1px solid #42b983;
+        border-radius: 10px;
+      }
+      .title {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+        background-color: #42b983;
+        font-weight: bold;
+        color: darkslategray;
+        font-size: 20px;
+        border-bottom: 1px solid #d2d2d2;
+      }
+      .box {
+        display: block;
+        /* display: block 屬性用法說明
+        當一個元素如多張圖片或多段文字的屬性設定為區塊（display:block）則這些元素將會在網頁上呈現自動換行的效果
+        除非設定了其它的屬性，例如 float 或是 position 等
+        https://www.wibibi.com/info.php?tid=163 */
+        width: 100%;
+        height: 0;
+        background-color: snow;
+        transition: height 0.4s;
+      }
+      .box > li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 40px;
+        border-bottom: 1px solid #d2d2d2;
+        font-size: 12px;
+        color: darkslategray;
+      }
+      .border {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <a @click="HandListShow" class="title">課程列表</a>
+      <div :class="{border: isBorder}">  
+      <!-- 藉由按下Show Border按鈕去改變isBorder的布林值，每次按下按鈕就會去重新渲染上方所包的整個div -->
+      <!-- 如果取消下方一行的註解，則可以觀察按下Show Border按鈕的時候，並不會去call Vue.Computed - domH，可以觀察console.log印出的內容 -->
+      <!-- <ul class="box" :style="{height: domH}"> -->
+      <!-- 上方列是使用vue裡面的computed的方法去計算height -->
+      <!-- 下方列是使用vue裡面自己寫的一個function domFn()去計算height --> 
+      <!-- 如果取消下方一行的註解，則可以觀察按下Show Border按鈕的時候，會每次去call method domFn()，可以觀察console.log印出的內容 -->
+        <ul class="box" :style="{height: domFn()}">
+        <!-- 上方一行，只要外部(div)所用到的資料isBorder值有改變，重新渲染整個div的時候則會每次都call method domFn() -->
+          <li v-for="(list, idx) in listArr" :key="list">{{list.name}}</li>
+        </ul>
+      </div>
+      <button @click="showBorder">Show Border</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, reactive, computed } = Vue;
+      const App = {
+        setup() {
+          const isOpen = ref(true);
+          const isBorder = ref(true);
+          const listArr = reactive([
+            { name: "2020 Vue3 專業職人 | 入門篇", money: 3200 },
+            { name: "2020 Vue3 專業職人 | 加值篇", money: 100 },
+            { name: "2020 Vue3 專業職人 | 進階篇", money: 500 },
+            { name: "現代 JavaScript 職人之路｜入門篇", money: 300 },
+            { name: "現代 JavaScript 職人之路｜中階實戰篇", money: 1600 },
+            { name: "職人必修的RWD 網頁入門班", money: 900 },
+            { name: "HTML5+Animate CC 網頁動畫與遊戲互動", money: 2000 },
+            { name: "現代 JavaScript 職人之路｜面試篇", money: 1800 },
+          ]);
+
+          const HandListShow = () => {
+            isOpen.value = !isOpen.value;
+          };
+
+          const showBorder = () => {
+            isBorder.value = !isBorder.value;
+          }
+
+          const domH = computed(()=>{  // 用computed方法
+            console.log("call Vue.computed");  // 用來觀察每次按下Show Border按鈕的時候是否會進來計算
+            return isOpen.value ? `${listArr.length * 40}px` : 0;  // 改寫上一個單元14 - Computed - 1.html的用法使用三元判斷式
+          });
+          // 筆記: computed會依據計算的資料進行緩存，
+          // 只要你的資料沒有重新被更新或修改，
+          // 你的computed不會再一次被重新計算執行。
+
+
+          const domFn = () => {  // 跟domH一樣，只是domFn是一個function (method)，可以在外部call此function去計算並Return
+            console.log("call method domFn()");  // 用來觀察每次按下Show Border按鈕的時候是否會進來計算
+            return isOpen.value ? `${listArr.length * 40}px` : 0;
+          };
+          // 筆記: methods 不會進行緩存，每次都會重新執行，
+          // 但是可以傳入參數進行處理
+
+          // 考慮到需不需要傳入參數資料去計算，computed是無法傳入參數，computed只能拿目前現有的資料去計算
+
+          return {
+            isOpen,
+            isBorder,
+            listArr,
+            HandListShow,
+            showBorder,
+            domH,
+            domFn
+          };
+        },
+      };
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>
