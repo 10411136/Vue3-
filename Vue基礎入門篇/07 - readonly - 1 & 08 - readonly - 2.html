@@ -12,6 +12,7 @@
   </head>
   <body>
     <div id="app">
+      <h1>reactive</h1>
       <h1>{{Num.idx}}</h1>
       <button @click="AddFn">Add</button>
       <button @click="Test">Add copy</button>
@@ -19,6 +20,7 @@
       <br />
       <br />
       <br />
+      <h1>ref</h1>
       <h1>{{Num1}}</h1>
       <button @click="AddFn1">Add</button>
       <button @click="Test1">Add copy</button>
@@ -43,17 +45,19 @@
 
           const Test = () => {
             copyNum.idx++; // readonly物件的屬性的值是不能被修改的
+            // reactive的資料Num，只要是readOnly則資料不能被修改
           };
 
           const AddFn1 = () => {
             Num1.value++;
 
-            console.log("Num=>", Num1);
-            console.log("copyNum=>", copyNum1);
+            console.log("Num=>", Num1); 
+            console.log("copyNum1=>", copyNum1);
           };
 
           const Test1 = () => {
-            copyNum1.value++; // readonly物件的屬性的值是不能被修改的
+            copyNum1.value++; // readonly物件的屬性的值是不能被修改的 
+            // ref的資料Num1，只要是readOnly則資料不能被修改
           };
 
           return { Num, AddFn, Test,  Num1, AddFn1, Test1 };
