@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>watch deep</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, reactive, watch } = Vue;
+      const App = {
+        setup() {
+          const data = ref({ user: {} });
+
+          watch(data, (newVal) => {
+            console.log(newVal);
+          },
+          { deep: true } // watch可以設定第三個參數"deep:true"，告訴watch要針對這個資料要做深層監控
+          // 這個功能會針對物件中每一個key去掃描，因此會消耗很多的效能，建議針對單一個key去做監控，如下方27行
+          );
+
+          /*
+          watch(  
+            data.value.user,  // 只針對單一個key做監控，不要整個物件去做監控，只有需要在物件裡大範圍掃描的時候才用deep: true去做監控
+            (newVal) => {
+              console.log(newVal);
+            }
+          );
+          */
+
+          setTimeout(() => {
+            data.value.user["name"] = "mike";
+
+          }, 1000);
+
+          return {};
+        },
+      };
+
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>
