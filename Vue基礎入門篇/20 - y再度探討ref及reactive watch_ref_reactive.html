@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ref & reactive & watch</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{refObj}}</h1>
+      <h1>{{reactiveObj}}</h1>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, reactive, watch } = Vue;
+      const App = {
+        setup() {
+          const refObj = ref({ idx: 0 });
+          const reactiveObj = reactive({ idx: 0 });
+
+          watch(refObj, (newVal)=>{  
+            // 針對整個array或物件做監控變動，refObj裡面的idx這個key的值變動的時候，ref沒有反應
+            console.log("ref : ", newVal);
+          });
+
+          
+          watch( // // 針對refObj裡面的單一個key - idx的值做監控
+            ()=> refObj.value.idx, 
+            (newVal)=>{  
+            console.log("監控refObj裡的idxk的值, ref : ", newVal);
+          });
+
+
+          watch(reactiveObj, (newVal)=>{  // 針對整個array或物件做監控變動的時候，reactive有反應
+            console.log("reactive : ", newVal);
+          });
+
+
+          setTimeout(()=>{  // 用setTimeout的方式去改變資料，再用watch方法去做監控這些資料
+            refObj.value.idx = 1;
+            reactiveObj.idx = 1;
+          }, 1000);
+
+
+          return { refObj, reactiveObj };
+        },
+      };
+
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

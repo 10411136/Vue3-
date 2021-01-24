@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>18 - 資料監控watch - 1</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, reactive, watch } = Vue;
+      const App = {
+        setup() {
+          const idx = ref(0);
+
+          watch(idx, (newIdx, oldIdx)=>{
+            console.log("new : ", newIdx, ", old : ", oldIdx);
+          }); 
+          
+          // watch這個方法可以傳入兩個參數，
+          // 第一個參數要塞入你要監控的那個值，
+          // 第二個參數要塞入當這個值被改變的時候，會觸發callback的函式，
+          // 當今天這個值被改變的時候，這個callback函式就會做處理
+          // 這個callback的函示會回傳兩個值，一個是這個資料改變之後的值newIdx，
+          // 另一個是這個資料改變之前的值oldIdx
+          // 這個章節是演示如何透過watch去監控ref的值被改變
+
+          setInterval(()=>{
+            idx.value++;
+          }, 1000);
+          return {};
+        },
+      };
+
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>
