@@ -66,9 +66,6 @@
       const {onMounted, reactive} = Vue;
       const app = {
         setup() {  
-          
-          
-
           const imgArr = reactive({ arr: [] });
           onMounted(()=>{  // 在DOM元素都渲染完畢之後才會執行onMounted，在onMounted的時候，透過api的方式取得資料，確認DOM元素已經準備好了，再把資料回塞給DOM元素
             
