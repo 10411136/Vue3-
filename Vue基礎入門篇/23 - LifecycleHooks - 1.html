@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>常用的 Lifecycle Hooks</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{idx}}</h1>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, onBeforeMount, onMounted, onUpdated } = Vue;
+      const App = {
+        setup() {  // setup()也是其中一個生命週期函式，當Vue.createApp(App)掛載到#app這個DOM元素上的時候，setup()就會被執行了!
+          const idx = ref(0);
+          setTimeout(() => {
+            idx.value = 1;
+            console.log(idx.value);
+          }, 3000);
+          onBeforeMount(() => {   // 只會在應用程式中的生命週期裡執行一次而已，不會再執行第二次
+            // DOM 渲染前 
+            // 將資料渲染到DOM畫面之前會執行onBeforeMount方法
+            console.log("DOM 渲染前");
+          });
+          onMounted(() => {   // 只會在應用程式中的生命週期裡執行一次而已，不會再執行第二次
+            // DOM 渲染完成後
+            // DOM元素將資料渲染完成之後會執行onMounted方法
+            console.log("DOM 渲染完成後");
+          });
+          onUpdated(() => {   // 當資料被改變的時候，畫面上的DOM元素的內容被更改完畢之後才會被調用。注意: 資料被改變的時候不會被調用，而是在DOM元素的內容被重新渲染完畢之後才會被調用
+            // 在資料更改導致virtual DOM重新渲染後調用
+            console.log("資料更改後");
+          });
+
+          return {
+            idx,
+          };
+        },
+      };
+
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

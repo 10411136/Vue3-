@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>watchEffect</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, reactive, watchEffect } = Vue;
+      const App = {
+        setup() {
+          const num = ref(0);
+          const numData = reactive({ idx: 0 });
+
+          watchEffect(()=>{  
+            console.log(num.value);
+            console.log(numData.idx);  // 在watchEffect使用numData.idx，如此一來在setTimeout將numData.idx改變時，watchEffect才能監控執行
+          });
+          // watchEffect會針對在watchEffect中有被用到的資料，去針對這些有被用到的資料去做監控
+          // 如在watchEffect中未被用到則不會做監控
+          // 只要watchEffect方法中，其中至少有一個值改變，整個watchEffect就會完整執行
+
+
+          setTimeout(() => {  
+            // num.value++;   // 將num.value註解，即num不會改變   
+            numData.idx++;   // 在setTimeout方法中改變numData.idx的值，如果要監控numData.idx是否有改變，就必須在watchEffect方法中使用到該資料
+          }, 1000);
+
+          return {};
+        },
+      };
+
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>watchEffect</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, reactive, watchEffect } = Vue;
+      const App = {
+        setup() {
+          const num = ref(0);
+          const numData = reactive({ idx: 0 });
+
+          watchEffect(()=>{//不需要傳入你要監控的資料，只要傳入你要callback處理的函式就好
+            // watchEffect在資料初始化的時候就會先被執行
+            // 前面幾章所使用的watch是等到資料改變的時候才會去觸發監控執行
+            // 而watchEffect在一開始初始化的時候就會先執行一次
+
+            console.log(num.value);
+
+
+          });
+
+          setTimeout(() => {
+            num.value++;
+            numData.idx++;
+          }, 1000);
+
+          return {};
+        },
+      };
+
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

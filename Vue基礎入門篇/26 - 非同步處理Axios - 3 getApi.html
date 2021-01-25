@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>非同步處理</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: slategray;
+      }
+      .box {
+        width: 500px;
+      }
+      .box > .btnbox {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .box > .btnbox > a {
+        padding: 10px 10px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 18px;
+      }
+      .img {
+        border: 8px solid #42b983;
+      }
+      .load {
+        width: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="box">
+        <div>
+          <img v-for="item in imgArr.arr" 
+          :key="item.url"
+          class="img" 
+          :src="item.url" 
+          alt="" />
+        </div>
+        <div class="btnbox">
+          <a href="javascript:;">上一張</a>
+          <a href="javascript:;">下一張</a>
+        </div>
+      </div>
+      <img class="load" src="./images/load.gif" alt="" />
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+    <script src="./js/vue.js"></script>
+    <script>
+      // 在這一個章節，探討如何將透過api取得的資料放到DOM元素上做render
+
+      const {onMounted, reactive} = Vue;
+      const app = {
+        setup() {  
+          
+          
+
+          const imgArr = reactive({ arr: [] });
+          onMounted(()=>{  // 在DOM元素都渲染完畢之後才會執行onMounted，在onMounted的時候，透過api的方式取得資料，確認DOM元素已經準備好了，再把資料回塞給DOM元素
+            
+            axios
+            .get('https://vue-lessons-api.herokuapp.com/photo/list')
+            .then((res) => {   
+                imgArr.arr = res.data;  // res是一個array，將res陣列塞給imgArr.arr，把原本是空陣列的imgArr替換成長度為7的陣列
+                console.log(res.data); 
+                console.log("imgArr.arr : ", imgArr.arr); 
+            });
+
+          });
+
+          return { imgArr };
+        },
+      };
+      Vue.createApp(app).mount("#app");
+    </script>
+  </body>
+</html>

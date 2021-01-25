@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>watchEffect</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, reactive, watchEffect } = Vue;
+      const App = {
+        setup() {
+          const num = ref(0);
+          const numData = reactive({ idx: 0 });
+
+          const stop = watchEffect(()=>{  
+            console.log(num.value);
+            if (num.value >= 4){  // num.value = 4的時候去執行stop()，則watchEffect函式就不會再執行了
+                stop();  // 將watchEffect方法設為變數stop，然後去執行stop，如此一來watchEffect就會被關閉。雖然在這邊是將watchEffect關閉，但是setInterval裡面的值還在持續改變
+            }
+          });
+          // watchEffect這個函式是可以被中斷停止執行的，
+          // 使用watch的時候，只要值一改變，watch就會被執行，
+          // 如果在某一個時間點，希望watch函式可以停止，後續資料若有改變，watch也都不要再執行。
+          // 首先，先將watchEffect這個方法設為一個變數，
+          // 接下來將setTimeout方法註解，改成setInterval。
+          
+
+        //   setTimeout(() => {  
+        //     // num.value++;     
+        //     numData.idx++;             
+        //   }, 1000);
+
+          setInterval(() => {  
+            num.value++;     
+            numData.idx++;       
+            console.log("setInterval");      
+          }, 1000);
+
+          return {};
+        },
+      };
+
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

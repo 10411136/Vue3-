@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>watchEffect</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+      const { ref, reactive, watchEffect } = Vue;
+      const App = {
+        setup() {
+          const num = ref(0);
+          const numData = reactive({ idx: 0 });
+
+          watchEffect(()=>{  
+              // 因為watchEffect這個方法裡面目前有使用到的資料只有num.value，
+              // 然而在setTimeout方法裡並沒有去改變num.value的值，
+              // 因此下方的console.log(num.value);不會被執行
+              // 只會在const num = ref(0)初始化num值的時候執行一次
+              // 在setTimeout改變numData.idx而因為沒有改變num.value的值，因此不會再執行watchEffect
+            console.log(num.value);
+          });
+
+          setTimeout(() => {  
+            // num.value++;   // 將num.value註解，即num不會改變   
+            numData.idx++;
+          }, 1000);
+
+          return {};
+        },
+      };
+
+      Vue.createApp(App).mount("#app");
+    </script>
+  </body>
+</html>
