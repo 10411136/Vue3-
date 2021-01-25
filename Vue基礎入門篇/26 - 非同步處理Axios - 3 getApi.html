@@ -75,7 +75,8 @@
             axios
             .get('https://vue-lessons-api.herokuapp.com/photo/list')
             .then((res) => {   
-                imgArr.arr = res.data;  // res是一個array，將res陣列塞給imgArr.arr，把原本是空陣列的imgArr替換成長度為7的陣列
+                imgArr.arr = res.data;  // res.data是一個array，將res.data塞給imgArr.arr，把原本是空陣列的imgArr.arr替換成長度為7的陣列
+                console.log("res: ", res);
                 console.log(res.data); 
                 console.log("imgArr.arr : ", imgArr.arr); 
             });
