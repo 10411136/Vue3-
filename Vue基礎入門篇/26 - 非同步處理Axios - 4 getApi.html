@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>非同步處理 Axios - 4 ( 邏輯處理 )</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: slategray;
+      }
+      .box {
+        width: 500px;
+      }
+      .box > .btnbox {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .box > .btnbox > a {
+        padding: 10px 10px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 18px;
+      }
+      .img {
+        border: 8px solid #42b983;
+      }
+      .load {
+        width: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="box">
+        <div>
+            <!-- v-show="imgIdx === i"  :  透過v-for去跑回圈，如果索引值i跟imgIdx值相同則顯示出來，因為imgIdx === i只會有一個值成立，所以一次只會顯示一張圖片 -->
+          <img v-for="(item, i) in imgArr.arr" 
+          v-show="imgIdx === i"  
+          :key="item.url"  
+          class="img" 
+          :src="item.url" 
+          alt="" />
+        </div>
+        <div class="btnbox">
+          <a @click="imgRemove" href="javascript:;">上一張</a>
+          <a @click="imgAdd" href="javascript:;">下一張</a>
+        </div>
+      </div>
+      <img class="load" src="./images/load.gif" alt="" />
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+    <script src="./js/vue.js"></script>
+    <script>
+      // 這一個章節教學如何做上一頁及下一頁
+
+      // 可以注意一下，這一章節完成之後，你會發現圖片在一開始loading載入的時候，DOM元素已經出現在畫面上了，等到圖片載入完畢後，才又重新渲染
+
+      const {onMounted, reactive, ref} = Vue;  // 要透過ref來幫我記錄已經點到第幾張圖片
+      const app = {
+        setup() {  
+          const imgArr = reactive({ arr: [] });
+          const imgIdx = ref(0);  // 第一張圖片索引為0
+          const imgAdd = () => { // 下一張圖片，做圖片切換
+            imgIdx.value++;
+            if(imgIdx.value > imgArr.arr.length-1){  
+                // 當索引值遞增到大於圖片最大索引值的時候，返回到最後一張圖片  
+                // 比方說有七張圖片，索引值為0~6，因此imgArr.arr.length-1=6
+                // 跑完最後一張圖片(索引值=6)之後，imgIdx.value++，則imgIdx.value=7，因為7>6所以返回到第一張(索引值=0)
+                imgIdx.value = 0;
+            }
+          };
+          const imgRemove = () => { // 上一張圖片，做圖片切換
+            imgIdx.value--;
+            if(imgIdx.value < 0){  // 當索引值遞減到小於0的時候，回到最後一張圖片
+                imgIdx.value = imgArr.arr.length-1;
+            }
+          };
+
+          onMounted(()=>{  
+            
+            axios
+            .get('https://vue-lessons-api.herokuapp.com/photo/list')
+            .then((res) => {   
+                imgArr.arr = res.data;  
+                console.log("res: ", res);
+                console.log(res.data); 
+                console.log("imgArr.arr : ", imgArr.arr); 
+            });
+
+          });
+
+          return { imgArr, imgIdx, imgAdd, imgRemove };
+        },
+      };
+      Vue.createApp(app).mount("#app");
+    </script>
+  </body>
+</html>
