@@ -1,5 +1,6 @@
 * 學習Vue的筆記
     * JavaScriptES6 : JavaScript ES6的JS語法
+    * goodnote_blog : 這是一個空白的vue cli專案
 <br />
 <br />
 <br />
